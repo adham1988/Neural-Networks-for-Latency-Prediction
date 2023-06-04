@@ -24,7 +24,11 @@ empty_csv(file_g)
 
 print("the files are empty")
 
-#print(f"{file_a} has been emptied.")
-# Empty CSV file B
-#empty_csv(file_b)
 
+# Read the first line of the file
+with open("database.txt", "r") as file:
+    first_line = file.readline()
+
+# Write only the first line back to the file
+with open("database.txt", "w") as file:
+    file.write(first_line)

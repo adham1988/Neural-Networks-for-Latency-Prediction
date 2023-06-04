@@ -100,8 +100,7 @@ def update_plot(event):
 
         index_C = int(latest_row_C[0])
         true_Y = float(latest_row_C[-1])
-        #print("YYYYYYYYYYY : ",true_Y)
-        #print("and index_C", true_Y)
+       
         # Check if the index values match and the row is different from the previous one
         if index_2 == index_3 == index_4 == index_5a == index_5b == index_Time == index_C and latest_row_3 != previous_row and true_Y != 0 and true_Y < upper_bound_Paris:
             
@@ -139,42 +138,33 @@ def update_plot(event):
                 abs_errors_model4[i].append(abs_error_model4[i])
                 abs_errors_model5A[i].append(abs_error_model5a[i])
                 abs_errors_model5B[i].append(abs_error_model5b[i])
-            #print("len :",len(data_Time_new))  
-            #print("Time : ",data_Time[0],data_Time[1],data_Time[2],data_Time[3],data_Time[4])
+          
             
             M3Time = np.append(M3Time,data_Time_new[0])
             M4Time = np.append(M4Time,data_Time_new[7])
             M5aTime = np.append(M5aTime,data_Time_new[8])
             M5bTime = np.append(M5bTime,data_Time_new[9])
-            #print("M3 :",np.mean(M3Time))
-            #print("M4 :",np.mean(M4Time))
-            #ERROR_3 = np.append(ERROR_3,mean_abs_error_model3)
-            #ERROR_4 = np.append(ERROR_4,mean_abs_error_model4)
-            #print("len of :",len(data_model2))
-            # Clear the current figure
             plt.clf()
 
             # Create subplots for the data and absolute errors
             plt.subplot(1, 2, 1)
-            #plt.plot(data_model2[4], 'b-', label='Model 2 Prediction')
             plt.plot(data_model3[4], 'g-', label='Model 3 Prediction')
             plt.plot(data_model4[4], 'c', label='Model 4 Prediction')
             plt.plot(data_model5A[4], 'm', label='Model 5A Prediction')
             plt.plot(data_model5B[4], 'y', label='Model 5B Prediction')
             
-            #print("hej med dig ", len(data_model3[4]))
+            
             plt.plot(data_C[4], 'r-', label='T_total')
-            #print("the len of pt t: ",len(data_C[4]))
+            
             plt.title(f" Model 3 t_DT: {np.mean(M3Time):.2f} ms,\nModel 4 t_DT: {np.mean(M4Time):.2f} ms,\nModel 5A t_DT: {np.mean(M5aTime):.2f} ms,\nModel 5B t_DT: {np.mean(M5bTime):.2f} ms,\nt_PT: {np.mean(data_C[4]):.2f} ms,\n\ny\u0302")
-            #plt.title("y\u0302")
+            
             plt.xlabel("Index")
             plt.ylabel("Time (ms)")
             plt.legend()
             plt.minorticks_on()
             plt.grid(which='major', linestyle='-', linewidth='0.5', color='black')
             plt.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
-            # Plot all data points
-            #plt.plot(range(len(data_model2[4])), data_model2[4], 'bo', alpha=0.3)
+            
             
             plt.plot(range(len(data_model3[4])), data_model3[4], 'go', alpha=0.3)
             plt.plot(range(len(data_model4[4])), data_model4[4], 'co', alpha=0.3)
@@ -183,19 +173,9 @@ def update_plot(event):
             
 
             plt.plot(range(len(data_C[4])), data_C[4], 'ro', alpha=0.3)
-            """
+          
             plt.subplot(1, 2, 2)
-            plt.plot(abs_errors_AC[4], label='Error AC')
-            plt.plot(abs_errors_BC[4], label='Error BC')
-            plt.xlabel('Sample')
-            plt.ylabel('Absolute Error')
-            plt.title('Absolute Errors for Sample 4')
-            plt.legend()
-            plt.ylim(-10, 30) # Adjust the y-axis limits
-            #plt.show()
-            """
-            plt.subplot(1, 2, 2)
-            #plt.plot(abs_errors_model2[4], 'b-', label='Absolute Error M2', zorder=2)
+            
             plt.plot(abs_errors_model3[4], 'g-', label='Absolute Error M3', zorder=2)
             plt.plot(abs_errors_model4[4], 'c', label='Absolute Error M4', zorder=2)
             plt.plot(abs_errors_model5A[4], 'm', label='Absolute Error M5A', zorder=2)
@@ -207,13 +187,7 @@ def update_plot(event):
             plt.plot(range(len(data_model3[4])), abs_errors_model5A[4], 'mo', alpha=0.3)
             plt.plot(range(len(data_model3[4])), abs_errors_model5B[4], 'yo', alpha=0.3)
 
-            #plt.scatter([0], [abs_errors_model2[4]], color='k', alpha=0.3, zorder=1)
-            #plt.scatter([0], [abs_error_model3[4]], color='k', alpha=0.3, zorder=1)
-            #plt.scatter([0], [abs_error_model4[4]], color='k', alpha=0.3, zorder=1)
-            #plt.scatter([0], [abs_error_model5a[4]], color='k', alpha=0.3, zorder=1)
-            #plt.scatter([0], [abs_error_model5b[4]], color='k', alpha=0.3, zorder=1)
-            #plt.plot(abs_errors_model3[4], 'mo', alpha=0.3)
-            #print(type(abs_error_AC[4]), type(abs_error_BC[4]))
+         
             
             mean_abs_error_model2 = np.mean(abs_errors_model2[4])
             mean_abs_error_model3 = np.mean(abs_errors_model3[4])
@@ -229,12 +203,12 @@ def update_plot(event):
             
             
 
-            #plt.title(f"Absolute Errors. (MAE AC: {mean_abs_error_AC:.2f} ms, MAE BC: {mean_abs_error_BC:.2f} ms)")
+            
             plt.title(f"MAE Model 3: {np.mean(ERROR_3):.2f} ms,\nMAE Model 4: {np.mean(ERROR_4):.2f} ms,\nMAE Model 5A: {np.mean(ERROR_5a):.2f} ms,\nMAE Model 5B: {np.mean(ERROR_5b):.2f} ms,\n\nAbsolute Errors")
             plt.ylabel("Time (ms)")
             plt.xlabel("Index")
             plt.legend()
-            #plt.plot(abs_errors_model2[4], 'ko', alpha=0.3)
+            
             
 
             
@@ -249,15 +223,18 @@ def update_plot(event):
             fig.suptitle("Models Performances", fontsize=16)
             # Update the plot
             plt.tight_layout()
+            plt.figtext(0.95, 0.95, "Authors: Adham, Linette, Magnus", fontsize=12, ha='right', va='top')
+
             plt.draw()
 
-            # Update
+            
 
 # Create the initial plot
 fig = plt.figure(figsize=(12, 5))
 fig.canvas.mpl_connect('motion_notify_event', update_plot)
-update_plot(None)
-#fig.title('Model 5b')
 
-# Show the plot
+update_plot(None)
+
+
+
 plt.show()

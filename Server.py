@@ -15,37 +15,18 @@ def handle_tcp_client(client_socket):
     with open(video_name, 'rb') as video_file:
         #open the video file and read its contents into a byte string variable
         video_data = video_file.read()
+        # encode corresponding to the encoding algo requested 
         if encoding == "Base64":
-            #print("encoding base")
             encoded_data = base64.b64encode(video_data)
         elif encoding == "binary":
-            #print("encoding binary")
             encoded_data = ''.join(format(byte, '08b') for byte in video_data)
         
 
-        #binary encoding
-        #binary_data = ''.join(format(byte, '08b') for byte in video_data)
-
-        #encoded_data = base64.b64encode(video_data)
-        # Convert the video data to hexadecimal and send it to the client
-        #hex_string = binascii.hexlify(video_data).decode('utf-8')
-        
-        
-
-   
-    # Send the encoded data to the client using hexadecimal
-    #client_socket.sendall(hex_string.encode('utf-8'))
     if encoding == "Base64":
-        #print("sending base")
         client_socket.sendall(encoded_data)
     elif encoding == "binary":
-        #print("sending binary")
         client_socket.sendall(encoded_data.encode())
-    # Send the encoded data to the client using base64
-    #client_socket.sendall(encoded_data)
-    #client_socket.sendall(binary_data.encode())
-
-    
+  
     # Close the client socket
     client_socket.close()
 
@@ -58,35 +39,27 @@ def handle_udp_client(data, client_address, server_socket):
     chunk_size = int(x[1])
     encoding = x[2]
     print("video requested : ",video_name, "encoding",encoding)
-    #print("video requested : ",video_name + "and UDP chunk : ",chunk_size + "encoding: ",encoding)
     
+    # encode corresponding to the encoding algo requested 
     with open(video_name, 'rb') as video_file:
         video_data = video_file.read()
         if encoding == "Base64":
-            #print("encode base")
             encoded_data = base64.b64encode(video_data)
         else:
-            #print("encode binary")
             encoded_data = ''.join(format(byte, '08b') for byte in video_data)
     
 # Send the encoded data to the client in chunks of 1300 bytes
    
     num_chunks = len(encoded_data) // chunk_size + 1
-    #print(num_chunks)
     if encoding == "Base64":
         for i in range(num_chunks):
-            #print("send chunks")
             start = i * chunk_size
             end = min((i + 1) * chunk_size, len(encoded_data))
-            #print("sending base")
             server_socket.sendto(encoded_data[start:end], client_address)
-            #print("shunk sent")
     else:
         for i in range(num_chunks):
-            #print("send chunks")
             start = i * chunk_size
             end = min((i + 1) * chunk_size, len(encoded_data))
-            #print("sending binary")
             server_socket.sendto(encoded_data[start:end].encode(), client_address)
 
     server_socket.sendto(b"END", client_address)
